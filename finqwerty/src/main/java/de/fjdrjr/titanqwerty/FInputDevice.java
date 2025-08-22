@@ -1,20 +1,17 @@
 // SPDX-License-Identifier: Apache-2.0
 
-
 package de.fjdrjr.titanqwerty;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.hardware.input.InputManager;
-import android.os.Build;
 import android.os.Parcelable;
-import android.util.ArrayMap;
 import android.util.Log;
 import android.view.InputDevice;
 
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,8 +34,10 @@ class FInputDevice {
 
     // devices that have been confirmed configurable via Android Settings
     private static final List<String> visibleDevices = Arrays.asList("keypad_8960", "omap4-keypad", "sec_keypad");
+
     // devices that have been confirmed not configurable via Android Settings
     private static final List<String> hiddenDevices = Arrays.asList("stmpe_keypad", "stmpe_azerty_keypad", "stmpe_qwertz_keypad");
+
     // devices that lose layout settings on reboot
     private static final List<String> privDevices = Arrays.asList("stmpe_keypad", "stmpe_azerty_keypad", "stmpe_qwertz_keypad");
 
@@ -47,6 +46,7 @@ class FInputDevice {
 
         InputDevice idev = inputManager.getInputDevice(deviceId);
 
+        assert idev != null;
         String name = idev.getName();
         displayName = name;
         descriptor = idev.getDescriptor();
@@ -56,18 +56,15 @@ class FInputDevice {
         vendorId = 0;
         productId = 0;
         isPriv = false;
-        if (Build.VERSION.SDK_INT >= 19) {
-            vendorId = idev.getVendorId();
-            productId = idev.getProductId();
-        }
+        vendorId = idev.getVendorId();
+        productId = idev.getProductId();
 
         int keybType = idev.getKeyboardType();
         boolean isVirtual = idev.isVirtual();
 
         if (keybType == KEYBOARD_TYPE_ALPHABETIC && !isVirtual) {
             confidence = 3;
-        }
-        else if (keybType == KEYBOARD_TYPE_ALPHABETIC && niceNames.containsKey(name)) {
+        } else if (keybType == KEYBOARD_TYPE_ALPHABETIC && niceNames.containsKey(name)) {
             confidence = 3;
         }
 
@@ -86,23 +83,30 @@ class FInputDevice {
              * Find the class via reflection to avoid non-SDK interface warning on Android 9
              * unless this function is *actually* called.
              */
-            Class<?> idicls = Class.forName("android.hardware.input.InputDeviceIdentifier");
-            Constructor idictr = idicls.getDeclaredConstructor(String.class, int.class, int.class);
-            return (Parcelable)idictr.newInstance(descriptor, vendorId, productId);
+            @SuppressLint("PrivateApi") Class<?> idicls = Class.forName("android.hardware.input.InputDeviceIdentifier");
+            Constructor<?> idictr = idicls.getDeclaredConstructor(String.class, int.class, int.class);
+            return (Parcelable) idictr.newInstance(descriptor, vendorId, productId);
 
         } catch (Exception e) {
             // TODO handle exceptions properly
-            Log.e(TAG, "Exception: " + e.toString());
+            Log.e(TAG, "Exception: " + e);
             return null;
         }
     }
 
     String displayName;
+
     String descriptor;
+
     int confidence;
+
     boolean knownVisible;
+
     boolean knownHidden;
+
     boolean isPriv;
+
     private int vendorId;
+
     private int productId;
 }

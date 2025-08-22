@@ -1,0 +1,245 @@
+type OVERLAY
+
+map key 127 SYM
+
+### ROW 1
+
+key Q {
+    label:                              'Q'
+    base:                               '\u3142'
+    number:			                    '0'
+    shift, capslock:                    '\u3143'
+    alt:	                			'0'
+   	sym:				                '\u005E'
+}
+
+key W {
+    label:                              'W'
+    base:                               '\u3148'
+    number:			'1'
+    shift, capslock:                    '\u3149'
+    alt:				'1'
+    sym:				'\u007C'
+}
+
+key E {
+    label:                              'E'
+    base:                               '\u3137'
+    number:			'2'
+    shift, capslock:                    '\u3138'
+    alt:				'2'
+    sym:				'\u20AC'
+}
+
+key R {
+    label:                              'R'
+    base:                               '\u3131'
+    number:			'3'
+    shift, capslock:                    '\u3132'
+    alt:				'3'
+   	sym:				'\u007B'
+}
+
+key T {
+    label:                              'T'
+    base:                               '\u3145'
+    number:			'('
+    shift, capslock:                    '\u3146'
+    alt:				'('
+    sym:				'\u005B'
+}
+
+key Y {
+    label:                              'Y'
+    base:                               '\u315b'
+    number:			')'
+    shift, capslock:                    '\u315b'
+    alt:				')'
+    sym:				'\u005D'
+}
+
+key U {
+    label:                              'U'
+    base:                               '\u3155'
+    number:			'-'
+    shift, capslock:                    '\u3155'
+    alt:				'-'
+    sym:				'\u007D'
+}
+
+key I {
+    label:                              'I'
+    base:                               '\u3151'
+    shift, capslock:                    '\u3151'
+    alt:				'_'
+    sym:				'\u0025'
+}
+
+key O {
+    label:                              'O'
+    base:                               '\u3150'
+    number:			'/'
+    shift, capslock:                    '\u3152'
+    alt:				'/'
+   	sym:				'\u005C'
+}
+
+key P {
+    label:                              'P'
+    base:                               '\u3154'
+    shift, capslock:                    '\u3156'
+    alt:				':'
+    sym:				'\u007E'
+}
+
+### ROW 2
+
+key A {
+    label:                              'A'
+    base:                               '\u3141'
+    shift, capslock:                    '\u3141'
+    alt:				'@'
+    sym:				'\u221E'
+}
+
+key S {
+    label:                              'S'
+    base:                               '\u3134'
+    number:			'4'
+    shift, capslock:                    '\u3134'
+    alt:				'4'
+    sym:				'\u0024'
+}
+
+key D {
+    label:                              'D'
+    base:                               '\u3147'
+    number:			'5'
+    shift, capslock:                    '\u3147'
+    alt:				'5'
+    sym:				'\u00B0'
+}
+
+key F {
+    label:                              'F'
+    base:                               '\u3139'
+    number:			'6'
+    shift, capslock:                    '\u3139'
+    alt:				'6'
+    sym:				'\u00F7'
+}
+
+key G {
+    label:                              'G'
+    base:                               '\u314E'
+    number:			'*'
+    shift, capslock:                    '\u314E'
+    alt:				'*'
+    	sym:				'\u00D7'
+}
+
+key H {
+    label:                              'H'
+    base:                               '\u3157'
+    number:			'#'
+    shift, capslock:                    '\u3157'
+    alt:				'#'
+    sym:				'\u003D'
+}
+
+key J {
+    label:                              'J'
+    base:                               '\u3153'
+    number:			'+'
+    shift, capslock:                    '\u3153'
+    alt:				'+'
+    sym:				'&'
+}
+
+key K {
+    label:                              'K'
+    base:                               '\u314F'
+    shift, capslock:                    '\u314F'
+    alt:				'\u0022'
+    sym:				'\u00BA'
+}
+
+key L {
+    label:                              'L'
+    base:                               '\u3163'
+    shift, capslock:                    '\u3163'
+    alt:				'\u0027'
+    sym:				'\u00A3'
+}
+
+### ROW 3
+
+key Z {
+    label:                              'Z'
+    base:                               '\u314B'
+    shift, capslock:                    '\u314B'
+    alt:				'!'
+    sym:				'\u00A1'
+}
+
+key X {
+    label:                              'X'
+    base:                               '\u314C'
+    number:			'7'
+    shift, capslock:                    '\u314C'
+    alt:				'7'
+    sym:				'\u00A5'
+}
+
+key C {
+    label:                              'C'
+    base:                               '\u314A'
+    number:			'8'
+    shift, capslock:                    '\u314A'
+    alt:				'8'
+    sym:				'\u00A2'
+}
+
+key V {
+    label:                              'V'
+    base:                               '\u314D'
+    number:			'9'
+    shift, capslock:                    '\u314D'
+    alt:				'9'
+    sym:				'\u003C'
+}
+
+key B {
+    label:                              'B'
+    base:                               '\u3160'
+    number:			'.'
+    shift, capslock:                    '\u3160'
+    alt:				'.'
+    sym:				'\u003E'
+}
+
+key N {
+    label:                              'N'
+    base:                               '\u315C'
+    number:			','
+    shift, capslock:                    '\u315C'
+    alt:				','
+    sym:				'\u003B'
+}
+
+key M {
+    label:                              'M'
+    base:                               '\u3161'
+    shift, capslock:                    '\u3161'
+    alt:				'?'
+    sym:				'\u00BF'
+}
+
+key 4 {
+    label:                              '$'
+    base:                               '\u20A9'
+    shift, capslock:                    '\u20A9'
+    alt, lalt:                          '\u20A9'
+    sym:                                '$'
+    lalt+lshift:                        '\uE141' # Special character means this is speaker key
+}

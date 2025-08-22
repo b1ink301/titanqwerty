@@ -33,6 +33,7 @@
     <string name="pocket_vie_1" translatable="false">TitanQwerty Unihertz Titan Pocket, Vietnamese</string>
     <string name="pocket_cz_1" translatable="false">TitanQwerty Unihertz Titan Pocket, Czech QWERTY</string>
     <string name="pocket_cz_2" translatable="false">TitanQwerty Unihertz Titan Pocket, Czech QWERTZ</string>
+    <string name="pocket_kor_1" translatable="false">TitanQwerty Unihertz Titan Pocket, 한국어</string>
 
     <string name="titan_ger_1" translatable="false">TitanQwerty Unihertz Titan (original), German QWERTY</string>
     <string name="titan_ger_2" translatable="false">TitanQwerty Unihertz Titan (original), German QWERTZ</string>

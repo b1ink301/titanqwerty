@@ -21,22 +21,17 @@ import static de.fjdrjr.titanqwerty.MainActivity.directModeMinImiSDK;
 import static de.fjdrjr.titanqwerty.MainActivity.directModeMinSDK;
 
 public class PrivBootupNotification extends BroadcastReceiver {
+
     @Override
     public void onReceive(Context context, Intent intent) {
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            /* should not get here on Priv */
-            return;
-        }
-
         if (!Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
             return;
         }
 
         /* TODO: duplicates MainActivity.java */
-        InputManager inputManager = (InputManager) context.getSystemService(context.INPUT_SERVICE);
+        InputManager inputManager = (InputManager) context.getSystemService(Context.INPUT_SERVICE);
 
-        int devices[] = inputManager.getInputDeviceIds();
+        int[] devices = inputManager.getInputDeviceIds();
         List<FInputDevice> fdevices = new ArrayList<>();
 
         boolean isPriv = false;
@@ -73,7 +68,7 @@ public class PrivBootupNotification extends BroadcastReceiver {
                             .setContentText(context.getString(R.string.layout_boot_notification_text));
 
             NotificationManager mNotificationManager =
-                    (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             mNotificationManager.notify(0, mBuilder.build());
         }
 

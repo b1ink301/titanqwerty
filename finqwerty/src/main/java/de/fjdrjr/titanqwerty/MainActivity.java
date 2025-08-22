@@ -1,22 +1,17 @@
 // SPDX-License-Identifier: Apache-2.0
 
-
 package de.fjdrjr.titanqwerty;
 
-import static android.content.Intent.ACTION_VIEW;
-
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.hardware.input.InputManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.app.Activity;
 import android.provider.Settings;
 import android.text.Html;
-import android.text.Layout;
 import android.text.method.LinkMovementMethod;
 import android.util.Pair;
 import android.view.Menu;
@@ -26,7 +21,6 @@ import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -35,20 +29,26 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.Intent.ACTION_VIEW;
+
 public class MainActivity extends Activity {
 
     /* support for opening the keyboard layout configuration directly via an intent */
     public static final int directModeMinSDK = 21;
+
     /* physical layout configuration setting is specific to each software input method */
     public static final int directModeMinImiSDK = 24;
+
     /* maximum SDK where opening the keyboard layout configuration directly (which is
      * not an official API) works */
     private static final int directModeMaxSDK = 27;
+
     /* separate physical keyboard settings activity (settings not directly in input
      * method settings) */
     private static final int semiModeHardKeybMinSDK = 24;
 
     private static final String CHANGELOG = "https://github.com/fjdrjr/titanqwerty/releases";
+
     private static final String WEBSITE = "https://android.onse.fi/finqwerty/";
 
     @Override
@@ -60,7 +60,7 @@ public class MainActivity extends Activity {
         final InputManager inputManager = (InputManager) getSystemService(INPUT_SERVICE);
         final InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
-        int devices[] = inputManager.getInputDeviceIds();
+        int[] devices = inputManager.getInputDeviceIds();
         List<FInputDevice> fdevices = new ArrayList<>();
 
         boolean hiddenDevices = false;
@@ -87,14 +87,14 @@ public class MainActivity extends Activity {
         View hideLayout = findViewById(R.id.hideLayout);
         View privLayout = findViewById(R.id.privLayout);
         View privLayout2 = findViewById(R.id.privLayout2);
-        TextView hideHelpView = (TextView)findViewById(R.id.hide_help_view);
-        TextView belowHelpSemi = (TextView)findViewById(R.id.configure_help_below1);
-        TextView belowHelpDirect = (TextView)findViewById(R.id.configure_help_below2);
+        TextView hideHelpView = findViewById(R.id.hide_help_view);
+        TextView belowHelpSemi = findViewById(R.id.configure_help_below1);
+        TextView belowHelpDirect = findViewById(R.id.configure_help_below2);
 
-        TextView semiHelp = (TextView)findViewById(R.id.textViewsemi);
-        Button semiButton = (Button)findViewById(R.id.LangInputSettings);
+        TextView semiHelp = findViewById(R.id.textViewsemi);
+        Button semiButton = findViewById(R.id.langInputSettings);
 
-        TextView mainTextView = (TextView)findViewById(R.id.mainText);
+        TextView mainTextView = findViewById(R.id.mainText);
         mainTextView.setMovementMethod(LinkMovementMethod.getInstance());
         mainTextView.setText(Html.fromHtml(String.format(getText(R.string.main_text).toString(), WEBSITE)));
 
@@ -140,7 +140,6 @@ public class MainActivity extends Activity {
                         configureIntents.add(new Pair<String, Intent>(buttontext, intent));
                     }
 
-
                 } else {
                     /* pre-24 */
                     final String buttontext = String.format(getText(R.string.configure_button_text_direct).toString(), fdev.displayName);
@@ -150,16 +149,15 @@ public class MainActivity extends Activity {
                 }
             }
 
-
             LinearLayout confButtonsLayout = (LinearLayout) findViewById(R.id.keybuttons);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
             for (final Pair<String, Intent> configureIntent : configureIntents) {
                 Button bt = new Button(this);
                 bt.setLayoutParams(params);
                 bt.setText(configureIntent.first);
                 bt.setOnClickListener(new View.OnClickListener() {
+
                     public void onClick(View v) {
                         startActivity(configureIntent.second);
                     }
@@ -174,7 +172,7 @@ public class MainActivity extends Activity {
 
             if (!found) {
                 /* no devices found, alter help text */
-                TextView directHelpView = (TextView)findViewById(R.id.configure_help_textview_direct);
+                TextView directHelpView = (TextView) findViewById(R.id.configure_help_textview_direct);
                 directHelpView.setText(R.string.configure_help_fail);
             }
 
@@ -186,9 +184,8 @@ public class MainActivity extends Activity {
                 belowHelpDirect.setVisibility(View.GONE);
             }
 
-
         } else {
-            Button inpsetbut = (Button)findViewById(R.id.LangInputSettings);
+            Button inpsetbut = findViewById(R.id.langInputSettings);
             final Intent semiIntent;
             if (Build.VERSION.SDK_INT >= semiModeHardKeybMinSDK) {
                 semiIntent = new Intent(Settings.ACTION_HARD_KEYBOARD_SETTINGS);
@@ -196,6 +193,7 @@ public class MainActivity extends Activity {
                 semiIntent = new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS);
             }
             inpsetbut.setOnClickListener(new View.OnClickListener() {
+
                 public void onClick(View v) {
                     startActivity(semiIntent);
                 }
@@ -215,9 +213,10 @@ public class MainActivity extends Activity {
             semiButton.setText(R.string.configure_button_text_semi_imi);
         }
 
-        Button hideSwitch = (Button)findViewById(R.id.hideSwitch);
+        Button hideSwitch = (Button) findViewById(R.id.hideSwitch);
         hideSwitch.setEnabled(isLauncherIconEnabled());
         hideSwitch.setOnClickListener(new View.OnClickListener() {
+
             public void onClick(View v) {
                 setLauncherIconEnabled(false);
                 Toast.makeText(MainActivity.this, "Removing TitanQwerty from launcher", Toast.LENGTH_LONG).show();
@@ -229,21 +228,14 @@ public class MainActivity extends Activity {
             privLayout.setVisibility(View.VISIBLE);
             privLayout2.setVisibility(View.VISIBLE);
 
-            Switch bootSwitch = (Switch)findViewById(R.id.bootSwitch);
+            Switch bootSwitch = (Switch) findViewById(R.id.bootSwitch);
             bootSwitch.setChecked(isBootNotificationEnabled());
-            bootSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    setBootNotificationEnabled(isChecked);
-                }
-            });
+            bootSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> setBootNotificationEnabled(isChecked));
 
             if (Build.VERSION.SDK_INT >= 24) {
                 /* e.g. BlackBerry KEYone or KEY2 */
-                TextView directHelpView = (TextView)findViewById(R.id.configure_help_textview_direct);
-                final String keyOneMessage = String.format("<span style=\"color: #ff0000;\">%s</span><br><a href=\"%s\">%s</a><br>",
-                        getText(R.string.configure_help_keyone).toString(),
-                        getText(R.string.configure_help_keyone_url).toString(),
-                        getText(R.string.more_information).toString());
+                TextView directHelpView = (TextView) findViewById(R.id.configure_help_textview_direct);
+                final String keyOneMessage = String.format("<span style=\"color: #ff0000;\">%s</span><br><a href=\"%s\">%s</a><br>", getText(R.string.configure_help_keyone).toString(), getText(R.string.configure_help_keyone_url).toString(), getText(R.string.more_information).toString());
                 directHelpView.setText(Html.fromHtml(keyOneMessage, 0));
                 directHelpView.setTextSize(19);
                 directHelpView.setMovementMethod(LinkMovementMethod.getInstance());
@@ -264,16 +256,15 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_changelog:
-                startActivity(new Intent(ACTION_VIEW, Uri.parse(CHANGELOG)));
-                return true;
-            case R.id.action_website:
-                startActivity(new Intent(ACTION_VIEW, Uri.parse(WEBSITE)));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_changelog) {
+            startActivity(new Intent(ACTION_VIEW, Uri.parse(CHANGELOG)));
+            return true;
+        } else if (itemId == R.id.action_website) {
+            startActivity(new Intent(ACTION_VIEW, Uri.parse(WEBSITE)));
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private boolean isBootNotificationEnabled() {
@@ -281,6 +272,7 @@ public class MainActivity extends Activity {
         ComponentName ourName = new ComponentName(this, PrivBootupNotification.class);
         return p.getComponentEnabledSetting(ourName) == PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
     }
+
     private void setBootNotificationEnabled(boolean enable) {
         PackageManager p = getPackageManager();
         ComponentName ourName = new ComponentName(this, PrivBootupNotification.class);
@@ -292,10 +284,10 @@ public class MainActivity extends Activity {
         ComponentName ourName = new ComponentName(this, this.getClass());
         return p.getComponentEnabledSetting(ourName) != PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
     }
+
     private void setLauncherIconEnabled(boolean enable) {
         PackageManager p = getPackageManager();
         ComponentName ourName = new ComponentName(this, this.getClass());
         p.setComponentEnabledSetting(ourName, enable ? PackageManager.COMPONENT_ENABLED_STATE_DEFAULT : PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
     }
-
 }
